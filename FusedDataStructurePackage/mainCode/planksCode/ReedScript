@@ -1,0 +1,9 @@
+make clean
+make
+gcc -g -fPIC  -I/usr/lib/jvm/jdk1.7.0/include -I/usr/lib/jvm/jdk1.7.0/include/linux -c CReedInterface.c
+gcc -g -fPIC  -I/usr/lib/jvm/jdk1.7.0/include -I/usr/lib/jvm/jdk1.7.0/include/linux -c reed_sol.c
+gcc -g -fPIC  -I/usr/lib/jvm/jdk1.7.0/include -I/usr/lib/jvm/jdk1.7.0/include/linux -c jerasure.c
+gcc -g -fPIC  -I/usr/lib/jvm/jdk1.7.0/include -I/usr/lib/jvm/jdk1.7.0/include/linux -c galois.c
+gcc -shared -W1,-soname,libCReedInterface.so -o libCReedInterface.so CReedInterface.o reed_sol.o jerasure.o galois.o
+
+

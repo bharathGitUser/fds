@@ -1,0 +1,43 @@
+These are instructions to run the fusion code:
+1. The type of the primary data structure in this code is defined by one of the GenericMap,
+GenericList, GenericQueue and GenericSet classes. Based on the type of primary, you need to modify
+one of them. For example, let us assume that the data structure you are trying to make fault
+tolerant is the Java TreeMap. Since this is a map-based data structure, the GenericMap class must be
+modified to extend TreeMap. This is the only change that needs to be performed in the code. The
+classes can now be compiled.
+2. For fault tolerance we use the Vandermonde ReedSolomon erasure code. Since we use the functions in the form of a
+library, libCReedInterface.so (through JNI), this is operating system dependent. The original source code for this
+library can be found in the folder planksCode/. To generate the library file, you need to run the
+ReedScript with modifications as required by your system. The generated .so file can be moved one
+folder up to its original location. Also, for java to detect this library file you need to set the
+LD_LIBRARY_PATH to the location of the .so file. Clearly, all these instructions assume a
+linux-based system. NOTE: If you change the java package structure, you need to redo the entire JNI
+process. That is why I have dumped all the java files in the same default package. 
+3. Once the class files and the library is ready, you can run the java code. There are three classes
+that you will need (explained assuming the tree map example):
+   (i). The FusionPrimaryMap (referred to as 'Primary' in the paper) which is the class to which the client will send its requests the way it
+      would have sent it to the standard java TreeMap. 
+   (ii) The FusedMap is the fused backup.
+	 (iii) The MapClient which issues the commands to the FusionPrimaryMap, and in case of failure
+				performs recovery. 
+4. Here is a script snippet which shows the order in which the files should be run. The delay is to
+make sure that data structure is up and running before anyone tries to establish connection with it. 
+
+  numFaults=3
+	numOperations=500
+  numPrimaries = 5 
+
+		for ((  i = 0 ;  i < $numFaults;  i++  ))
+		do
+		java FusedMap $i $numPrimaries $numFaults &
+		sleep 10
+		done
+
+		for ((  i = 0 ;  i < $numPrimaries;  i++  ))
+		do
+		java PrimaryMap $i $numFaults &
+		sleep 10
+		done
+
+		java MapClient  $numPrimaries $numFaults $numOperations
+ 

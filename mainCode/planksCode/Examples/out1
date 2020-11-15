@@ -1,0 +1,71 @@
+Last (m * w) rows of the Binary Distribution Matrix:
+
+110 011 111
+001 110 100
+100 111 110
+
+011 110 001
+110 001 101
+111 100 010
+
+Encodings Complete:
+
+Data                 Coding
+D0  p0 : 00000019    C0  p0 : 0000001e
+    p1 : 0000001a        p1 : 00000001
+    p2 : 0000001b        p2 : 00000003
+D1  p0 : 0000001a    C1  p0 : 0000001d
+    p1 : 0000001b        p1 : 00000019
+    p2 : 0000001c        p2 : 0000001e
+D2  p0 : 0000001b    
+    p1 : 0000001c    
+    p2 : 0000001d    
+
+Erased 2 random devices:
+
+Data                 Coding
+D0  p0 : 00000000    C0  p0 : 0000001e
+    p1 : 00000000        p1 : 00000001
+    p2 : 00000000        p2 : 00000003
+D1  p0 : 00000000    C1  p0 : 0000001d
+    p1 : 00000000        p1 : 00000019
+    p2 : 00000000        p2 : 0000001e
+D2  p0 : 0000001b    
+    p1 : 0000001c    
+    p2 : 0000001d    
+
+State of the system after decoding:
+
+Data                 Coding
+D0  p0 : 00000019    C0  p0 : 0000001e
+    p1 : 0000001a        p1 : 00000001
+    p2 : 0000001b        p2 : 00000003
+D1  p0 : 0000001a    C1  p0 : 0000001d
+    p1 : 0000001b        p1 : 00000019
+    p2 : 0000001c        p2 : 0000001e
+D2  p0 : 0000001b    
+    p1 : 0000001c    
+    p2 : 0000001d    
+
+Suppose we erase the first 2 devices.  Here is the decoding matrix:
+
+001 100 111
+101 010 100
+010 001 110
+
+100 111 100
+010 100 010
+001 110 001
+
+100 000 000
+010 000 000
+001 000 000
+
+And dm_ids:
+
+2 3 4
+
+After calling jerasure_matrix_dotprod, we calculate the value of device #0, packet 0 to be:
+
+D0  p0 : 00000019
+

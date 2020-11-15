@@ -1,0 +1,6 @@
+make clean
+make
+gcc -g -fPIC -I/home/bharath/include -I/usr/lib/java/include -I/usr/lib/java/include/linux -c CReedInterface.c
+gcc -shared -W1,-soname,libCReedInterface.so -o libCReedInterface.so CReedInterface.o reed_sol.o jerasure.o galois.o
+
+
